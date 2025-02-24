@@ -9,16 +9,24 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Root from "./components/Root/Root.jsx";
-import Home from "./components/Home/Home.jsx";
+// import Home from "./components/Home/Home.jsx";
 import ListedBooks from "./components/Pages/ListedBooks.jsx";
+import BookDetails from "./components/BookDetails/BookDetails.jsx";
+import Home from "./components/Home/Home.jsx";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<Root></Root>}>
-        <Route path="/" element={<Home></Home>}></Route>
-      </Route>
-      <Route path="listed" element={<ListedBooks></ListedBooks>}></Route>
+    <Route path="/" element={<Root></Root>}>
+      <Route path="/" element={<Home></Home>}></Route>
+      <Route
+        path="/books/:bookId"
+        loader={async () => {
+          const response = await fetch(`/data/booksData.json`);
+          return response.json();
+        }}
+        element={<BookDetails></BookDetails>}
+      ></Route>
+      <Route path="/listed" element={<ListedBooks></ListedBooks>}></Route>
     </Route>
   )
 );
