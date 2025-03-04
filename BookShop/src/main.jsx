@@ -26,7 +26,14 @@ const route = createBrowserRouter(
         }}
         element={<BookDetails></BookDetails>}
       ></Route>
-      <Route path="/listed" element={<ListedBooks></ListedBooks>}></Route>
+      <Route
+        path="/listed"
+        loader={async () => {
+          const response = await fetch(`/data/booksData.json`);
+          return response.json();
+        }}
+        element={<ListedBooks></ListedBooks>}
+      ></Route>
     </Route>
   )
 );
